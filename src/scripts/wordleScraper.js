@@ -1,6 +1,6 @@
 const WORDLE_URL = 'https://www.nytimes.com/games-assets/v2/wordle.ad4d1f42a5aee771f8d6557988a5fb7e99877fdc.js';
 const PROXY_URL = 'https://sleepy-hamlet-25032.herokuapp.com/';
-const START_DATE = new Date('2022-08-06');
+const START_DATE = new Date('2022-08-06 00:00:00');
 const START_WORD = 'alien';
 
 export const fetchWordleData = async (wordleUrl) => {

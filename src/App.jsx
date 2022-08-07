@@ -1,17 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
-import {getWordleData} from './scripts/wordleScraper';
+import WordleContext from './context/WordleContext';
 
 function App() {
 
-  useEffect(() => {
-    getWordleData();
-  }, []);
-
   return (
-    <div className="App">
-      Hello, World!
-    </div>
+    <WordleContext>
+      <div className="App">
+        Hello, World!
+      </div>
+    </WordleContext>
   );
 }
 
