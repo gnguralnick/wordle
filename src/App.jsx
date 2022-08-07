@@ -1,5 +1,9 @@
-import React, { useState } from 'react';
+import React, { createContext, useState } from 'react';
 import WordleContext, { useSolutionWordList, useValidWordList, useSolutionWord } from './context/WordleContext';
+import classNames from 'classnames/bind';
+
+import Styles from './App.module.scss';
+const cx = classNames.bind(Styles);
 
 const WORD_LENGTH = 5;
 const NUM_GUESSES = 5;
@@ -33,9 +37,7 @@ function App() {
 
     if (currentGuess === solutionWord) {
       setWon(true);
-    }
-
-    if (guesses.length + 1 >= NUM_GUESSES) {
+    } else if (guesses.length + 1 >= NUM_GUESSES) {
       setLost(true);
     }
 
@@ -43,9 +45,6 @@ function App() {
     setCurrentGuess('');
     setMaxChars(false);
     setInvalidWord(false);
-
-
-
   };
 
   const handleGuessChange = (e) => {
@@ -60,10 +59,22 @@ function App() {
     setCurrentGuess(e.target.value);
   }
 
+  const renderWord = (word, index) => {
+    return <p key={index} className={cx('guess')}>{word.split('').map((letter, index) => {
+      return <span
+        key={index}
+        className={cx(
+          {'letter-correct': solutionWord.charAt(index) === letter},
+          {'letter-kinda-correct': solutionWord.includes(letter) && !(solutionWord.charAt(index) === letter)},
+          {'letter-incorrect': !solutionWord.includes(letter)},
+        )}>{letter}</span>;
+    })}</p>;
+  }
+
   return (
     <div>
       <h1>Welcome to Wordle!</h1>
-      {guesses.map((guess, index) => <p key={index}>{guess}</p>)}
+      {guesses.map(renderWord)}
       <form onSubmit={handleSubmit}>
         <input type="text" value={currentGuess} onChange={handleGuessChange} disabled={won || lost}/>
         <input type='submit' value='Submit' disabled={won || lost}/>

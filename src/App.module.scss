@@ -1,0 +1,14 @@
+.letter {
+
+    &-correct {
+        color: green;
+    }
+
+    &-incorrect {
+        color: red;
+    }
+
+    &-kinda-correct {
+        color: orange;
+    }
+}
