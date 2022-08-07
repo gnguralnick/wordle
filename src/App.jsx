@@ -1,7 +1,10 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useRef, useEffect } from 'react';
 import WordleContext, { useSolutionWordList, useValidWordList, useSolutionWord } from './context/WordleContext';
 import classNames from 'classnames/bind';
 import Word from './components/Word/Word';
+import WordInput from './components/WordInput/WordInput';
+
+import './global.scss';
 
 import Styles from './App.module.scss';
 const cx = classNames.bind(Styles);
@@ -22,16 +25,21 @@ function App() {
   const [lost, setLost] = useState(false);
   const [invalidWord, setInvalidWord] = useState(false);
 
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  })
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (currentGuess.length < WORD_LENGTH) {
+    if (currentGuess.length > WORD_LENGTH) {
       setMaxChars(true);
       return;
     }
 
     if (!solutionWordList.includes(currentGuess) && !validWordList.includes(currentGuess)) {
-
       setInvalidWord(true);
       return;
     }
@@ -48,24 +56,33 @@ function App() {
     setInvalidWord(false);
   };
 
-  const handleGuessChange = (e) => {
-    setInvalidWord(false);
-    if (e.target.value.length > WORD_LENGTH) {
-      setMaxChars(true);
+  const handleKeyDown = e => {
+    if (won || lost) {
       return;
     }
-    else {
-      setMaxChars(false);
+
+
+    if (e.key === 'Backspace' && currentGuess.length === 0) {
+      setCurrentGuess('');
+    } else if (e.key === 'Backspace' && currentGuess.length > 0) {
+      setCurrentGuess(currentGuess.slice(0, -1));
+    } else if (e.key === 'Enter') {
+      handleSubmit(e);
+    } else if (e.key !== ' ' && String.fromCharCode(e.keyCode).match(/(\w)/g)) {
+      if (currentGuess.length < WORD_LENGTH) {
+        setCurrentGuess(currentGuess.concat(e.key));
+      } else {
+        setMaxChars(true);
+      }
     }
-    setCurrentGuess(e.target.value);
   }
 
   return (
     <div>
       <h1>Welcome to Wordle!</h1>
-      {guesses.map((guess, index) => <Word word={guess} key={index} />)}
+      {guesses.map((guess, index) => <Word word={guess} key={index} complete length={WORD_LENGTH}/>)}
       <form onSubmit={handleSubmit}>
-        <input type="text" value={currentGuess} onChange={handleGuessChange} disabled={won || lost}/>
+        <Word word={currentGuess} length={WORD_LENGTH} />
         <input type='submit' value='Submit' disabled={won || lost}/>
       </form>
       {maxChars && <p style={{color: 'red'}}>Please enter a word of length {WORD_LENGTH}</p>}
