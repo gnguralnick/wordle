@@ -27,5 +27,5 @@ export const getWordleData = async () => {
     const solutionWordIndex = (startWordIndex + distFromStartDate) % solutionWordList.length;
     const solutionWord = solutionWordList[solutionWordIndex];
 
-    return {solutionWord, validWordList};
+    return {solutionWord, validWordList, solutionWordList};
 };

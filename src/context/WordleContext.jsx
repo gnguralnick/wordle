@@ -40,15 +40,21 @@ const WordleContext = ({children}) => {
 }
 
 export const useSolutionWord = () => {
-  const ctx = React.useContext(BaseCtx);
+    const ctx = React.useContext(BaseCtx);
 
-  return ctx.solutionWord;
+    return ctx.solutionWord;
 }
 
 export const useValidWordList = () => {
-  const ctx = React.useContext(BaseCtx);
+    const ctx = React.useContext(BaseCtx);
 
-  return ctx.validWordList;
+    return ctx.validWordList;
+}
+
+export const useSolutionWordList = () => {
+    const ctx = React.useContext(BaseCtx);
+
+    return ctx.solutionWordList;
 }
 
 export default WordleContext;
