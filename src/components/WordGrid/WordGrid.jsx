@@ -25,7 +25,6 @@ const WordGrid = props => {
             if (index === guesses.length) {
                 return <form onSubmit={onSubmit}>
                     <Word word={currentGuess} length={wordLength} />
-
                 </form>;
             }
             return <Word key={index} word={word} length={wordLength} complete={word !== ''} />;
@@ -36,7 +35,6 @@ const WordGrid = props => {
     <div className={Styles['wordgrid']} style={{'--length': `${grid.length}`}}>
         {renderGrid()}
     </div>
-    <button onClick={onSubmit} disabled={wonOrLost}>Enter</button>
     </>;
 };
 

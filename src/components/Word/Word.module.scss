@@ -37,10 +37,7 @@
         display: inline-flex;
         justify-content: center;
         align-items: center;
-        background-color: grey;
-
-        transition: background-color 0s;
-        transition-delay: 2s;
+        background-color: transparent;
 
         span {
             font-size: 2rem;
@@ -48,28 +45,23 @@
             color: white;
         }
 
+        &.filled {
+            background-color: grey;
+        }
+
         &.incorrect {
-
             background-color: red;
-
             @include flip-animate-color(grey, red);
-
-
         }
 
         &.kinda-correct {
-
             background-color: orange;
             @include flip-animate-color(grey, orange);
-
-
         }
 
         &.correct {
-
             background-color: green;
             @include flip-animate-color(grey, green);
-
         }
 
 

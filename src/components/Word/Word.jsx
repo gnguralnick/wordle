@@ -27,6 +27,7 @@ const Word = props => {
             return <div key={index} style={{'--index': `${index}`}}
                 className={cx(
                     'char',
+                    {'filled': char !== ' '},
                     {'complete': complete},
                     {'incorrect': complete && !solutionWord.includes(char)},
                     {'kinda-correct': complete && solutionWord.includes(char) && char !== solutionWord[index]},
