@@ -1,0 +1,6 @@
+.wordgrid {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(var(--length) * 75px);
+}

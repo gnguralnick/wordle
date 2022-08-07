@@ -6,6 +6,7 @@ import Word from './components/Word/Word';
 import './global.scss';
 
 import Styles from './App.module.scss';
+import WordGrid from './components/WordGrid/WordGrid';
 const cx = classNames.bind(Styles);
 
 const WORD_LENGTH = 5;
@@ -79,11 +80,13 @@ function App() {
   return (
     <div>
       <h1>Welcome to Wordle!</h1>
-      {guesses.map((guess, index) => <Word word={guess} key={index} complete length={WORD_LENGTH}/>)}
-      <form onSubmit={handleSubmit}>
-        <Word word={currentGuess} length={WORD_LENGTH} />
-        <input type='submit' value='Submit' disabled={won || lost}/>
-      </form>
+      <WordGrid
+        guesses={guesses}
+        currentGuess={currentGuess}
+        wordLength={WORD_LENGTH}
+        numGuesses={NUM_GUESSES}
+        onSubmit={handleSubmit}
+        wonOrLost={won || lost}/>
       {maxChars && <p style={{color: 'red'}}>Please enter a word of length {WORD_LENGTH}</p>}
       {invalidWord && <p style={{color: 'red'}}>Please enter a valid word</p>}
       {won && <p style={{color: 'green'}}>You won!</p>}
