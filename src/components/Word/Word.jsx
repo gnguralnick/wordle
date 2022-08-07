@@ -24,14 +24,15 @@ const Word = props => {
     return (
         <div className={cx('word')} style={{'--length': `${length}`}}>
         {fullWord.split('').map((char, index) => {
-            return <div key={index}
+            return <div key={index} style={{'--index': `${index}`}}
                 className={cx(
                     'char',
-                    {'incorrect': complete},
-                    {'kinda-correct': complete && solutionWord.includes(char)},
+                    {'complete': complete},
+                    {'incorrect': complete && !solutionWord.includes(char)},
+                    {'kinda-correct': complete && solutionWord.includes(char) && char !== solutionWord[index]},
                     {'correct': complete && char === solutionWord[index]}
                 )}>
-                    {char}
+                    <span>{char}</span>
             </div>;
         }
         )}

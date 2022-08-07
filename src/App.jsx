@@ -2,7 +2,6 @@ import React, { createContext, useState, useRef, useEffect } from 'react';
 import WordleContext, { useSolutionWordList, useValidWordList, useSolutionWord } from './context/WordleContext';
 import classNames from 'classnames/bind';
 import Word from './components/Word/Word';
-import WordInput from './components/WordInput/WordInput';
 
 import './global.scss';
 

@@ -1,3 +1,24 @@
+@mixin flip-animate-color($from, $to) {
+    @keyframes flip-animate-color-#{$from}-#{$to} {
+        0% {
+            background-color: $from;
+            transform: rotateX(0deg);
+        }
+        50% {
+            background-color: $from;
+            transform: rotateX(90deg);
+        }
+        100% {
+            background-color: $to;
+            transform: rotateX(0deg);
+        }
+    }
+
+    animation-name: flip-animate-color-#{$from}-#{$to};
+    animation-duration: 2s;
+    //animation-delay: calc(var(--index) * 0.1s);
+}
+
 .word {
     display: flex;
     justify-content: space-between;
@@ -11,33 +32,46 @@
         
         padding: 0;
 
+
+
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
         background-color: grey;
-        transition: transform 1s background-color 1s;
+
+        transition: background-color 0s;
+        transition-delay: 2s;
 
         span {
-
-            text-align: center;
+            font-size: 2rem;
             text-transform: capitalize;
             color: white;
-            background: none;
-            //border: none;
-            width: 100%;
-            height: 100%;
         }
 
         &.incorrect {
+
             background-color: red;
-            transform: rotateY(360deg);
+
+            @include flip-animate-color(grey, red);
+
+
         }
 
         &.kinda-correct {
+
             background-color: orange;
-            transform: rotateY(360deg);
+            @include flip-animate-color(grey, orange);
+
+
         }
 
         &.correct {
+
             background-color: green;
-            transform: rotateY(360deg);
+            @include flip-animate-color(grey, green);
+
         }
+
+
     }
 }
