@@ -1,6 +1,7 @@
 import React, { createContext, useState } from 'react';
 import WordleContext, { useSolutionWordList, useValidWordList, useSolutionWord } from './context/WordleContext';
 import classNames from 'classnames/bind';
+import Word from './components/Word/Word';
 
 import Styles from './App.module.scss';
 const cx = classNames.bind(Styles);
@@ -59,22 +60,10 @@ function App() {
     setCurrentGuess(e.target.value);
   }
 
-  const renderWord = (word, index) => {
-    return <p key={index} className={cx('guess')}>{word.split('').map((letter, index) => {
-      return <span
-        key={index}
-        className={cx(
-          {'letter-correct': solutionWord.charAt(index) === letter},
-          {'letter-kinda-correct': solutionWord.includes(letter) && !(solutionWord.charAt(index) === letter)},
-          {'letter-incorrect': !solutionWord.includes(letter)},
-        )}>{letter}</span>;
-    })}</p>;
-  }
-
   return (
     <div>
       <h1>Welcome to Wordle!</h1>
-      {guesses.map(renderWord)}
+      {guesses.map((guess, index) => <Word word={guess} key={index} />)}
       <form onSubmit={handleSubmit}>
         <input type="text" value={currentGuess} onChange={handleGuessChange} disabled={won || lost}/>
         <input type='submit' value='Submit' disabled={won || lost}/>
