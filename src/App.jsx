@@ -3,6 +3,7 @@ import WordleContext, { useSolutionWordList, useValidWordList, useSolutionWord }
 import classNames from 'classnames/bind';
 import Word from './components/Word/Word';
 import Keyboard from './components/Keyboard/Keyboard';
+import Toast from './components/Toast/Toast';
 
 import './global.scss';
 
@@ -11,7 +12,7 @@ import WordGrid from './components/WordGrid/WordGrid';
 const cx = classNames.bind(Styles);
 
 const WORD_LENGTH = 5;
-const NUM_GUESSES = 5;
+const NUM_GUESSES = 6;
 
 function App() {
 
@@ -31,7 +32,14 @@ function App() {
     document.addEventListener('keydown', handleKeyDown);
 
     return () => document.removeEventListener('keydown', handleKeyDown);
-  })
+  });
+
+  const timeoutState = (setFunc, value, duration) => {
+    setFunc(value);
+    setTimeout(() => {
+      setFunc(!value);
+    }, duration);
+  };
 
   const handleSubmit = (e) => {
     if (e) {
@@ -39,12 +47,12 @@ function App() {
     }
 
     if (currentGuess.length > WORD_LENGTH) {
-      setMaxChars(true);
+      timeoutState(setMaxChars, true, 2000);
       return;
     }
 
     if (!solutionWordList.includes(currentGuess) && !validWordList.includes(currentGuess)) {
-      setInvalidWord(true);
+      timeoutState(setInvalidWord, true, 2000);
       return;
     }
 
@@ -86,13 +94,14 @@ function App() {
       setCurrentGuess('');
     } else if (e.key === 'Backspace' && currentGuess.length > 0) {
       setCurrentGuess(currentGuess.slice(0, -1));
+      setMaxChars(false);
     } else if (e.key === 'Enter') {
       handleSubmit(e);
     } else if (e.key !== ' ' && String(e.key).match(/(\w)/g) && e.key.length === 1) {
       if (currentGuess.length < WORD_LENGTH) {
         setCurrentGuess(currentGuess.concat(e.key));
       } else {
-        setMaxChars(true);
+        timeoutState(setMaxChars, true, 2000);
       }
     }
   }
@@ -102,7 +111,6 @@ function App() {
       <div className={cx('header')}>
         <h1>Wordle!</h1>
       </div>
-
       <div className={cx('game-container')}>
         <WordGrid
           guesses={guesses}
@@ -111,10 +119,10 @@ function App() {
           numGuesses={NUM_GUESSES}
           onSubmit={handleSubmit}
           wonOrLost={won || lost}/>
-        {maxChars && <p style={{color: 'red'}}>Please enter a word of length {WORD_LENGTH}</p>}
-        {invalidWord && <p style={{color: 'red'}}>Please enter a valid word</p>}
-        {won && <p style={{color: 'green'}}>You won!</p>}
-        {lost && <p style={{color: 'red'}}>You lost! The correct word was {solutionWord}!</p>}
+        {maxChars && <Toast failure>Please enter a word of length {WORD_LENGTH}</Toast>}
+        {invalidWord && <Toast failure>Please enter a valid word</Toast>}
+        {won && <Toast success duration={5000}>You won!</Toast>}
+        {lost && <Toast failure duration={5000}>You lost! The correct word was {solutionWord}!</Toast>}
         <Keyboard keyboardState={keyboardState} onClick={handleKeyDown} onSubmit={handleSubmit}/>
       </div>
     </div>

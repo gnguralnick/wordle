@@ -1,0 +1,40 @@
+@keyframes fadein {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeout {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+.toast-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 30%;
+    animation-name: fadeout;
+    animation-duration: .5s;
+    animation-delay: calc(var(--duration) - 500ms);
+}
+
+.toast {
+    background-color: black;
+    border-radius: .25rem;
+
+    color: white;
+
+
+    padding: .5rem;
+
+    animation: fadein .5s 0s;
+
+    &.success {
+        color: lightgreen;
+    }
+
+    &.failure {
+        color: red;
+    }
+}
