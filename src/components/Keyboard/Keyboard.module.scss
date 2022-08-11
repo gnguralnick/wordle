@@ -1,5 +1,63 @@
 .keyboard {
+    margin-top: 1rem;
+    //display: flex;
+    flex-direction: column;
+    //align-items: center;
+    width: 100%;
+    user-select: none;
+
     .char {
         text-transform: capitalize;
+        height: 100%;
+        background: lightgrey;
+        color: white;
+        font-weight: bold;
+        font-size: 1.5rem;
+        padding: 0;
+        text-align: center;
+        margin-right: .5rem;
+        border: none;
+        border-radius: .25rem;
+        min-width: 2rem;
+        justify-content: space-evenly;
+
+        &.correct {
+            background-color: green;
+        }
+
+        &.incorrect {
+            background-color: red;
+        }
+
+        &.kinda {
+            background-color: orange;
+        }
+    }
+
+    .row {
+        height: 3.25rem;
+        margin-bottom: .5rem;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+
+    }
+
+    .spacer {
+        display: inline-block;
+        flex: 0.5;
+    }
+
+    .submit {
+        margin-right: .5rem;
+        text-transform: uppercase;
+    }
+
+    .delete {
+        padding: 0 .5rem;
+        img {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
     }
 }
