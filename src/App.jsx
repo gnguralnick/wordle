@@ -88,7 +88,7 @@ function App() {
       setCurrentGuess(currentGuess.slice(0, -1));
     } else if (e.key === 'Enter') {
       handleSubmit(e);
-    } else if (e.key !== ' ' && String(e.key).match(/(\w)/g)) {
+    } else if (e.key !== ' ' && String(e.key).match(/(\w)/g) && e.key.length === 1) {
       if (currentGuess.length < WORD_LENGTH) {
         setCurrentGuess(currentGuess.concat(e.key));
       } else {
@@ -98,21 +98,25 @@ function App() {
   }
 
   return (
-    <div>
-      <h1>Welcome to Wordle!</h1>
-      <WordGrid
-        guesses={guesses}
-        currentGuess={currentGuess}
-        wordLength={WORD_LENGTH}
-        numGuesses={NUM_GUESSES}
-        onSubmit={handleSubmit}
-        wonOrLost={won || lost}/>
-      {maxChars && <p style={{color: 'red'}}>Please enter a word of length {WORD_LENGTH}</p>}
-      {invalidWord && <p style={{color: 'red'}}>Please enter a valid word</p>}
-      {won && <p style={{color: 'green'}}>You won!</p>}
-      {lost && <p style={{color: 'red'}}>You lost! The correct word was {solutionWord}!</p>}
+    <div className={cx('app')}>
+      <div className={cx('header')}>
+        <h1>Wordle!</h1>
+      </div>
 
-      <Keyboard keyboardState={keyboardState} onClick={handleKeyDown} onSubmit={handleSubmit}/>
+      <div className={cx('game-container')}>
+        <WordGrid
+          guesses={guesses}
+          currentGuess={currentGuess}
+          wordLength={WORD_LENGTH}
+          numGuesses={NUM_GUESSES}
+          onSubmit={handleSubmit}
+          wonOrLost={won || lost}/>
+        {maxChars && <p style={{color: 'red'}}>Please enter a word of length {WORD_LENGTH}</p>}
+        {invalidWord && <p style={{color: 'red'}}>Please enter a valid word</p>}
+        {won && <p style={{color: 'green'}}>You won!</p>}
+        {lost && <p style={{color: 'red'}}>You lost! The correct word was {solutionWord}!</p>}
+        <Keyboard keyboardState={keyboardState} onClick={handleKeyDown} onSubmit={handleSubmit}/>
+      </div>
     </div>
   );
 }

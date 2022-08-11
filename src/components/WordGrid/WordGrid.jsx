@@ -18,8 +18,6 @@ const WordGrid = props => {
         
     }, [guesses]);
 
-    console.log(grid);
-
     const renderGrid = () => {
         return grid.map((word, index) => {
             if (index === guesses.length) {

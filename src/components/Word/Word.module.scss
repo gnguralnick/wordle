@@ -1,3 +1,5 @@
+@use '../../variables.scss' as v;
+
 @mixin flip-animate-color($from, $to) {
     @keyframes flip-animate-color-#{$from}-#{$to} {
         0% {
@@ -20,14 +22,15 @@
 }
 
 .word {
-    display: flex;
-    justify-content: space-between;
-    width: calc(var(--length) * 60px);
-    height: calc(var(--length) * 10px);
+    display: grid;
+    grid-gap: .5rem;
+    grid-template-columns: repeat(var(--length), 1fr);
+    height: 100%;
+    margin-bottom: 1rem;
 
     .char {
         height: 100%;
-        width: calc(var(--length) * 10px);
+        width: 100%;
         border: 1px solid grey;
         
         padding: 0;
@@ -40,7 +43,7 @@
         background-color: transparent;
 
         span {
-            font-size: 2rem;
+            font-size: 3rem;
             text-transform: capitalize;
             color: white;
         }
